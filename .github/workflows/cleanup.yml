@@ -1,0 +1,21 @@
+name: Cleanup
+
+on:
+  schedule:
+    - cron: '20 4 * * *'
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: pwsh
+
+    steps:
+      - name: Check out
+        uses: actions/checkout@v4
+        with:
+          path: build
+      - name: Cleanup orphaned branches
+        run: |
+          . ./build/.github/scripts/cleanup.orphaned.branches.ps1
